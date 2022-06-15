@@ -1,6 +1,6 @@
 {
   "name": "sentence-similarity",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Sentence similarity algorithm.",
   "main": "index.js",
   "scripts": {
@@ -20,8 +20,7 @@
   "homepage": "https://github.com/jloveric/SentenceSimilarity#readme",
   "dependencies": {
     "clone": "^2.1.1",
-    "debug": "^2.6.6",
-    "helper-clockmaker": "^1.0.0"
+    "debug": "^2.6.6"
   },
   "keywords": [
     "sentence",

@@ -1,8 +1,17 @@
 "use strict";
 
-let Helper = require("helper-clockmaker").Helper;
 let debug = require("debug")("SentenceSimilarity");
 let deepcopy = require("clone");
+
+const betweenParentheses = /\(([^)]+)\)/;
+const punctuation = /[.,\/#!$%\^&\*;:{}=\-_`~?]/g;
+
+function cleanArray(a) {
+  for (let i = 0; i < a.length; i++) {
+    a[i] = a[i].replace(punctuation, "").toLowerCase();
+  }
+  return a;
+}
 
 /**
  * Order similarity should only depend on the number of matches, since
@@ -54,7 +63,7 @@ let similarityTable = function(a, b, options) {
   for (let i = 0; i < b.length; i++) {
     table.push([]);
 
-    if (!b[i].match(Helper.betweenParentheses)) {
+    if (!b[i].match(betweenParentheses)) {
       for (let j = 0; j < a.length; j++) {
         let score = options.f(a[j], b[i], options.options);
         table[i].push(score);
@@ -162,7 +171,7 @@ let matchScore = function(bm, a, b) {
 let lengthScore = function(a, b) {
   let pCount = 0;
   b.forEach(val => {
-    if (val.match(Helper.betweenParentheses)) {
+    if (val.match(betweenParentheses)) {
       pCount++;
     }
   });
@@ -213,8 +222,8 @@ let similarity = function(ain, bin, options) {
   let b = deepcopy(bin);
 
   //Get rid of punctuation and capitalization for the comparison phase.
-  a = Helper.cleanArray(a);
-  b = Helper.cleanArray(b);
+  a = cleanArray(a);
+  b = cleanArray(b);
 
   debug("a", a);
   debug("b", b);
